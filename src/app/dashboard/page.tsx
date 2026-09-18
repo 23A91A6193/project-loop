@@ -178,8 +178,8 @@ export default function DashboardPage() {
               Corporate-Grade AI Customer-Feedback Intelligence Platform
             </span>
           </div>
-          <div className="text-[11px] text-slate-500 font-mono">
-            Zidio Internship Capstone • Next.js 14 • Prisma • SQLite / Postgres • AI Engine
+          <div className="text-[11px] text-slate-400 font-mono">
+            Zidio Capstone • Built by <span className="text-indigo-300 font-medium">M. Ranjith Kumar</span> &amp; <span className="text-purple-300 font-medium">M. Renuka Bindu</span>
           </div>
         </div>
       </footer>

@@ -8,6 +8,7 @@ Built for the **Zidio Development Web Development Internship Track** (Corporate-
 ---
 
 ## 📋 Table of Contents
+- [👥 Project Team & Developers](#-project-team--developers)
 - [Executive Overview](#-executive-overview)
 - [Tech Stack](#-tech-stack)
 - [System Architecture & Multi-Tenancy](#-system-architecture--multi-tenancy)
@@ -19,6 +20,17 @@ Built for the **Zidio Development Web Development Internship Track** (Corporate-
 - [Environment Variables](#-environment-variables)
 - [Database Schema & Seeding](#-database-schema--seeding)
 - [API Endpoints Reference](#-api-endpoints-reference)
+
+---
+
+## 👥 Project Team & Developers
+
+This capstone project was collaboratively designed, architected, and engineered as a group by:
+
+| Developer | Role & Title | Engineering Responsibilities |
+|---|---|---|
+| **M. Ranjith Kumar** | Full-Stack & AI Lead | Full-stack Next.js 14 architecture, Prisma multi-tenant database modeling, server-side RBAC guards, Gemini AI Grounded RAG search engine, REST route handlers, and Vercel cloud deployment. |
+| **M. Renuka Bindu** | Frontend & UI/UX Co-Lead | Enterprise dark-mode design system, Recharts analytics visualizations, two-tier responsive navigation, bulk CSV data ingestion pipelines, and QA test validation. |
 
 ---
 
@@ -239,4 +251,4 @@ The seed script (`prisma/seed.js`) automatically provisions **123+ diverse feedb
 
 ---
 
-*Issued for Zidio Development Internship Web Development Track • Built by Intern Team*
+*Issued for Zidio Development Internship Web Development Track • Built collaboratively by M. Ranjith Kumar & M. Renuka Bindu*

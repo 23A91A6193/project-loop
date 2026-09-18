@@ -24,14 +24,14 @@ async function main() {
   const users = [
     {
       email: 'admin@acme.com',
-      name: 'Rahul Sharma (Admin)',
+      name: 'M. Ranjith Kumar (Lead Dev & Admin)',
       passwordHash: 'password123',
       role: 'ADMIN',
       tenantId: tenant.id,
     },
     {
       email: 'analyst@acme.com',
-      name: 'Priya Patel (Analyst)',
+      name: 'M. Renuka Bindu (Co-Dev & Analyst)',
       passwordHash: 'password123',
       role: 'ANALYST',
       tenantId: tenant.id,

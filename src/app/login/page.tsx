@@ -182,9 +182,9 @@ export default function LoginPage() {
                 </span>
               </div>
               <span className="text-[10px] font-semibold text-slate-200 truncate w-full">
-                Rahul S.
+                Ranjith M.
               </span>
-              <span className="text-[9px] text-slate-500 mt-0.5">Manage & VoC</span>
+              <span className="text-[9px] text-slate-500 mt-0.5">Admin / Lead</span>
             </button>
 
             {/* Analyst */}
@@ -202,9 +202,9 @@ export default function LoginPage() {
                 </span>
               </div>
               <span className="text-[10px] font-semibold text-slate-200 truncate w-full">
-                Priya P.
+                Renuka B.
               </span>
-              <span className="text-[9px] text-slate-500 mt-0.5">Ingest & AI</span>
+              <span className="text-[9px] text-slate-500 mt-0.5">Analyst / Co-Dev</span>
             </button>
 
             {/* Viewer */}
