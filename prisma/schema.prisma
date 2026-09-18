@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Tenant {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  plan      String   @default("PRO")
+  apiKey    String   @unique @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users     User[]
+  feedbacks Feedback[]
+  themes    Theme[]
+  reports   VocReport[]
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         String   @default("ANALYST") // ADMIN, ANALYST, VIEWER
+  tenantId     String
+  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Feedback {
+  id                 String    @id @default(cuid())
+  tenantId           String
+  tenant             Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  customerName       String?
+  customerEmail      String?
+  channel            String    @default("PORTAL") // PORTAL, EMAIL, PLAY_STORE, TWITTER, CSV_IMPORT, API, SUPPORT_TICKET, NPS_SURVEY, SALES_CALL, COMMUNITY
+  rating             Int?      // 1 to 5
+  content            String
+  status             String    @default("NEW") // NEW, REVIEWED, ACTIONED
+  
+  // AI Analyzed Fields
+  isAnalyzed         Boolean   @default(false)
+  sentiment          String?   // POSITIVE, NEUTRAL, NEGATIVE
+  sentimentScore     Float?    // -1.0 to 1.0 (confidence or net sentiment)
+  sentimentRationale String?
+  category           String?   // BUG, FEATURE_REQUEST, UI_UX, PERFORMANCE, BILLING, OTHER
+  urgencyScore       Int?      // 1 (Low) to 5 (Critical)
+  actionSuggestion   String?   // AI actionable recommendation
+  
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  themes             FeedbackTheme[]
+}
+
+model Theme {
+  id          String   @id @default(cuid())
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  color       String   @default("indigo")
+  createdAt   DateTime @default(now())
+
+  feedbacks   FeedbackTheme[]
+}
+
+model FeedbackTheme {
+  id         String   @id @default(cuid())
+  feedbackId String
+  feedback   Feedback @relation(fields: [feedbackId], references: [id], onDelete: Cascade)
+  themeId    String
+  theme      Theme    @relation(fields: [themeId], references: [id], onDelete: Cascade)
+  confidence Float    @default(0.85)
+
+  @@unique([feedbackId, themeId])
+}
+
+model VocReport {
+  id                String   @id @default(cuid())
+  tenantId          String
+  tenant            Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  title             String
+  timeRange         String   @default("Last 30 Days")
+  totalFeedbacks    Int
+  positiveCount     Int
+  negativeCount     Int
+  neutralCount      Int
+  netSentimentScore Float
+  topThemes         String   // JSON string of themes
+  keyStrengths      String   // JSON string of highlights
+  criticalIssues    String   // JSON string of critical complaints
+  executiveSummary  String
+  actionPlan        String
+  createdBy         String   @default("AI Intelligence Engine")
+  createdAt         DateTime @default(now())
+}
