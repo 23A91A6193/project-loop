@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Project LOOP - Capstone Project Documentation</title>
+  <style>
+    @page { size: A4; margin: 20mm; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      line-height: 1.6;
+      margin: 0;
+      padding: 30px;
+      background: #fff;
+    }
+    .header {
+      border-bottom: 3px solid #6366f1;
+      padding-bottom: 20px;
+      margin-bottom: 25px;
+    }
+    .badge {
+      display: inline-block;
+      background: #e0e7ff;
+      color: #4338ca;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    h1 {
+      color: #0f172a;
+      font-size: 26px;
+      margin: 12px 0 6px 0;
+      font-weight: 800;
+    }
+    .subtitle {
+      color: #64748b;
+      font-size: 14px;
+      margin: 0;
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin: 20px 0;
+      font-size: 13px;
+    }
+    .meta-item strong { color: #334155; }
+    h2 {
+      color: #1e1b4b;
+      font-size: 18px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 6px;
+      margin-top: 25px;
+      margin-bottom: 12px;
+    }
+    h3 {
+      color: #312e81;
+      font-size: 15px;
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+    p, li {
+      font-size: 13px;
+      color: #334155;
+    }
+    ul, ol {
+      padding-left: 20px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      font-size: 12px;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+    }
+    tr:nth-child(even) { background: #f8fafc; }
+    .box {
+      background: #eef2ff;
+      border-left: 4px solid #6366f1;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin: 15px 0;
+      font-size: 12.5px;
+    }
+    .diagram-box {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      margin: 15px 0;
+      white-space: pre;
+    }
+    .footer {
+      margin-top: 35px;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 15px;
+      font-size: 11px;
+      color: #94a3b8;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <span class="badge">Zidio Development Web Track &bull; Capstone Project</span>
+    <h1>Project LOOP &mdash; AI Customer-Feedback Intelligence Platform</h1>
+    <p class="subtitle">An Enterprise-Grade Multi-Tenant Customer Feedback Aggregator, Trend Spike Detector, and Grounded RAG Assistant</p>
+  </div>
+
+  <div class="meta-grid">
+    <div class="meta-item"><strong>Developer:</strong> M. Ranjith Kumar</div>
+    <div class="meta-item"><strong>Internship Track:</strong> Web Development</div>
+    <div class="meta-item"><strong>GitHub Repository:</strong> https://github.com/23A91A6193/project-loop</div>
+    <div class="meta-item"><strong>Live Deployment:</strong> https://project-loop-xi.vercel.app</div>
+  </div>
+
+  <h2>1. Executive Summary &amp; Problem Statement</h2>
+  <p>
+    Modern digital companies collect feedback from fragmented channels: support tickets, App Store reviews, Google Play ratings, NPS surveys, sales calls, and community forums. Individually, these are isolated comments; collectively, they indicate urgent product fixes and strategic roadmap priorities.
+  </p>
+  <p>
+    <strong>Project LOOP</strong> solves this problem by providing a unified multi-tenant intelligence workspace:
+  </p>
+  <ul>
+    <li><strong>Multi-Channel Ingestion:</strong> Single feedback forms, high-throughput bulk CSV uploads, and simulated real-time channel webhooks (Zendesk, App Store, G2).</li>
+    <li><strong>AI Auto-Classification:</strong> Every incoming customer comment is analyzed in real time for sentiment, confidence scores, urgency level (L1&ndash;L5), and category tags.</li>
+    <li><strong>Spike Detection:</strong> Compares week-over-week velocity to alert product teams before minor bugs become major churn events.</li>
+    <li><strong>Ask LOOP (Grounded RAG):</strong> Natural language Q&amp;A engine that answers product questions by citing verbatim customer comments with zero hallucinations.</li>
+    <li><strong>VoC Executive Briefs:</strong> One-click generator producing leadership-ready Voice-of-Customer digests with exportable PDF formatting.</li>
+  </ul>
+
+  <h2>2. System Architecture</h2>
+  <div class="diagram-box">
++-----------------------------------------------------------------------------------+
+|                           CLIENT TIER (Next.js 14 App Router)                     |
+|  - Dark Mode Enterprise UI (Tailwind CSS, Lucide Icons, Recharts Interactive SVGs)|
+|  - Two-Tier Responsive Navigation (Stripe / GitHub Style Header)                  |
+|  - Client-side PapaParse CSV Ingestion Engine                                     |
++------------------------------------------+----------------------------------------+
+                                           |
+                              HTTP / HTTPS | (Cookies &amp; RBAC Tokens)
+                                           v
++------------------------------------------+----------------------------------------+
+|                      SERVER BOUNDARY (Next.js Server Handlers)                    |
+|  - Role-Based Access Control Guards (ADMIN, ANALYST, VIEWER)                      |
+|  - Multi-Tenant Isolation Filter (where: { tenantId: session.tenantId })          |
+|  - Zod Input Validation &amp; Safe Sanitization Layer                                 |
++---------------------+-----------------------------------+-------------------------+
+                      |                                   |
+                      v                                   v
++---------------------+-------------+   +-----------------+-------------------------+
+|     DATA TIER (Prisma ORM)        |   |           AI INTELLIGENCE ENGINE          |
+|  - SQLite / Postgres Storage      |   |  - Google Gemini 1.5 Flash Model          |
+|  - Strict Cascading Foreign Keys  |   |  - Zero-Dependency Heuristic Fallback     |
+|  - Relational Themes &amp; Feedback   |   |  - Grounded RAG Verbatim Citation Synthesizer
++-----------------------------------+   +-------------------------------------------+
+  </div>
+
+  <h2>3. Technology Stack &amp; Design Rationale</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Layer</th>
+        <th>Technology</th>
+        <th>Rationale &amp; Benefit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Framework</strong></td>
+        <td>Next.js 14 (App Router) + TypeScript</td>
+        <td>Serverless architecture, full-stack route handlers, strict type safety.</td>
+      </tr>
+      <tr>
+        <td><strong>Styling</strong></td>
+        <td>Tailwind CSS + Lucide Icons</td>
+        <td>High-contrast corporate dark mode theme, responsive 2-tier navigation.</td>
+      </tr>
+      <tr>
+        <td><strong>Database &amp; ORM</strong></td>
+        <td>Prisma ORM + SQLite / PostgreSQL</td>
+        <td>Declarative relational schema, automatic migrations, strict tenant isolation.</td>
+      </tr>
+      <tr>
+        <td><strong>AI Engine</strong></td>
+        <td>Google Gemini API + Heuristic Fallback</td>
+        <td>Structured JSON classification, grounded Q&amp;A, and resilient offline capability.</td>
+      </tr>
+      <tr>
+        <td><strong>Visualizations</strong></td>
+        <td>Recharts</td>
+        <td>Volume gradient area charts, sentiment donut charts, and category bars with 1-click drilldown.</td>
+      </tr>
+      <tr>
+        <td><strong>Validation &amp; Parsing</strong></td>
+        <td>Zod + PapaParse</td>
+        <td>Runtime API payload validation and high-throughput CSV data ingestion.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>4. Key Features &amp; Implementation Highlights</h2>
+
+  <h3>C1 &amp; C2: Multi-Tenancy and Role-Based Access Control (RBAC)</h3>
+  <p>
+    Project LOOP enforces strict workspace data segregation. Every single database query strictly filters by <code>tenantId</code>. The platform features three distinct pre-configured enterprise roles:
+  </p>
+  <ul>
+    <li><strong>ADMIN:</strong> Full workspace governance, team member invites, API key management, and VoC report generation.</li>
+    <li><strong>ANALYST:</strong> Feedback triage, CSV imports, manual AI re-classification, and status updates (NEW &rarr; REVIEWED &rarr; ACTIONED).</li>
+    <li><strong>VIEWER:</strong> Read-only access to analytics and themes. Destructive or write actions trigger HTTP 403 Forbidden toast alerts.</li>
+  </ul>
+
+  <h3>C3 &amp; C4: Feedback Ingestion &amp; Dynamic Triage Workflow</h3>
+  <p>
+    Feedback can be ingested through single-entry forms, simulated webhooks, or CSV spreadsheets. The Inbox supports full-text search, status transitions, and multi-dimensional filtering across channel, sentiment, category, and date ranges with a dedicated one-click filter reset control.
+  </p>
+
+  <h3>AI1 &amp; AI2: AI Auto-Classification &amp; Trend Spike Detection</h3>
+  <p>
+    Customer submissions are automatically parsed into structured JSON containing sentiment scores, urgency ratings (1 to 5), and actionable business recommendations. Themes with greater than 40% week-over-week velocity growth are automatically flagged in a prominent red Spike Alert Banner.
+  </p>
+
+  <h3>AI3 &amp; AI4: Ask LOOP (Grounded RAG) &amp; VoC Executive Digests</h3>
+  <p>
+    The Ask LOOP assistant answers natural language questions (e.g., <em>"What are users saying about mobile stability?"</em>) by fetching the top relevant customer records and generating a synthesis grounded strictly in verbatim quotes. Leadership teams can generate executive summaries and export them directly to PDF.
+  </p>
+
+  <h2>5. Demo Verification Credentials</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Role</th>
+        <th>Demo Email</th>
+        <th>Password</th>
+        <th>Permissions &amp; Scope</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>ADMIN</strong></td>
+        <td>admin@acme.com</td>
+        <td>password123</td>
+        <td>Full governance, member invites, VoC reports, triage</td>
+      </tr>
+      <tr>
+        <td><strong>ANALYST</strong></td>
+        <td>analyst@acme.com</td>
+        <td>password123</td>
+        <td>Data ingestion, CSV upload, status updates, AI re-classification</td>
+      </tr>
+      <tr>
+        <td><strong>VIEWER</strong></td>
+        <td>viewer@acme.com</td>
+        <td>password123</td>
+        <td>Read-only inspection (write operations blocked with HTTP 403)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>6. Conclusion</h2>
+  <p>
+    Project LOOP successfully demonstrates a corporate-grade, production-ready full-stack application built for high-throughput customer feedback intelligence. By combining modern React architectures, relational database safety, and intelligent retrieval-grounded AI, the system enables product teams to make confident, data-backed decisions.
+  </p>
+
+  <div class="footer">
+    Project LOOP &bull; Zidio Development Web Track Capstone Submission &bull; Developed by M. Ranjith Kumar &bull; September 2026
+  </div>
+
+</body>
+</html>
